@@ -24,7 +24,8 @@ public class Score : MonoBehaviour {
 		ScoreText = GameObject.Find("ScoreText");
 
 		// ScoreTextに0で初期化したスコア変数を表示する
-		ScoreText.GetComponent<Text> ().text = "Score: " + score;
+		// スコアをToString()メゾットの引数をD9で指定し、9桁で0埋めする
+		ScoreText.GetComponent<Text> ().text = "Score: "  + score.ToString("D9");
 			
 	}
 
@@ -33,18 +34,22 @@ public class Score : MonoBehaviour {
 
 		// 各タグに加算する点数を設定する
 		if (other.gameObject.tag == "SmallStarTag") {
-			score += 10;
-		} else if (other.gameObject.tag == "SmallCloudTag") {
 			score += 50;
-		} else if (other.gameObject.tag == "LargeStarTag" || other.gameObject.tag == "LargeCloudTag") {
+		} else if (other.gameObject.tag == "SmallCloudTag") {
 			score += 100;
+		} else if (other.gameObject.tag == "LargeStarTag" || other.gameObject.tag == "LargeCloudTag") {
+			score += 500;
 		} else if (max_score < score) {
 			score = max_score;
 		}
 
 		// ScoreTextに衝突により加算された合計スコア変数を表示する
-		ScoreText.GetComponent<Text> ().text = "Score: " + score;
-
+		// if文を使用してスコアが最大値に達した時に数値を振り切らないようにする
+		// スコアをToString()メゾットの引数をD9で指定し、9桁で0埋めする
+		ScoreText.GetComponent<Text> ().text = "Score: " + score.ToString("D9");
+		if (score > max_score) {
+			ScoreText.GetComponent<Text> ().text = "Score: " + max_score.ToString ("D9");
+		}
 
 	}
 }
