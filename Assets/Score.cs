@@ -14,6 +14,9 @@ public class Score : MonoBehaviour {
 	// スコアを0で初期化
 	int score= 0;
 
+	// スコアの最大値を999999999に設定
+	const int max_score = 999999999;
+
 	// Use this for initialization
 	void Start () {
 
@@ -29,12 +32,14 @@ public class Score : MonoBehaviour {
 	void OnCollisionEnter(Collision other){
 
 		// 各タグに加算する点数を設定する
-		if(other.gameObject.tag == "SmallStarTag"){
+		if (other.gameObject.tag == "SmallStarTag") {
 			score += 10;
 		} else if (other.gameObject.tag == "SmallCloudTag") {
 			score += 50;
 		} else if (other.gameObject.tag == "LargeStarTag" || other.gameObject.tag == "LargeCloudTag") {
 			score += 100;
+		} else if (max_score < score) {
+			score = max_score;
 		}
 
 		// ScoreTextに衝突により加算された合計スコア変数を表示する
@@ -43,7 +48,5 @@ public class Score : MonoBehaviour {
 
 	}
 }
-
-
 
 
